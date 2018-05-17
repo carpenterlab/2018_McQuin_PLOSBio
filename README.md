@@ -8,7 +8,7 @@ Repository for **CellProfiler 3.0: next generation image processing for biology*
 
 All pipelines were initially designed to run in CellProfiler 3.0.0; all FIJI macros in FIJI-ImageJ1.51N with MorpholibJ 1.3.3.
 
-The workflows herein correspond to the following [Broad Bioimage Benchmark Collection](https://data.broadinstitute.org/bbbc/index.html_ entries
+The workflows herein correspond to the following [Broad Bioimage Benchmark Collection](https://data.broadinstitute.org/bbbc/index.html) entries
 
 * hiPSCs_Fig1 = [BBBC034](https://data.broadinstitute.org/bbbc/BBBC034/) (AICS-12_134)
 * hiPSCs_Fig4 = [BBBC034](https://data.broadinstitute.org/bbbc/BBBC034/) (colony_center and edge)
