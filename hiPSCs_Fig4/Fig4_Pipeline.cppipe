@@ -1,0 +1,653 @@
+CellProfiler Pipeline: http://www.cellprofiler.org
+Version:3
+DateRevision:300
+GitHash:
+ModuleCount:60
+HasImagePlaneDetails:False
+
+Images:[module_num:1|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'To begin creating your project, use the "Images" module to compile a list of files and/or folders that you want to analyze. You can also specify a set of rules to include only the desired files in your selected folders. In this example raw nuclei, membrane and cytoplasm images are uploaded. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    :
+    Filter images?:Images only
+    Select the rule criteria:and (extension does isimage) (directory doesnot containregexp "\x5B\\\\\\\\\\\\\\\\/\x5D\\\\\\\\.")
+
+Metadata:[module_num:2|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'The "Metadata" module optionally allows you to extract information describing your images (i.e, metadata) which will be stored along with your measurements. This information can be contained in the file name and/or location, or in an external file. In this example "Metadata" will not be used.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Extract metadata?:No
+    Metadata data type:Text
+    Metadata types:{}
+    Extraction method count:1
+    Metadata extraction method:Extract from file/folder names
+    Metadata source:File name
+    Regular expression to extract from file name:^(?P<Plate>.*)_xy(?P<Site>\x5B0-9\x5D)_ch(?P<ChannelNumber>\x5B0-9\x5D)
+    Regular expression to extract from folder name:(?P<Date>\x5B0-9\x5D{4}_\x5B0-9\x5D{2}_\x5B0-9\x5D{2})$
+    Extract metadata from:All images
+    Select the filtering criteria:and (file does contain "")
+    Metadata file location:
+    Match file and image metadata:\x5B\x5D
+    Use case insensitive matching?:No
+
+NamesAndTypes:[module_num:3|svn_version:\'Unknown\'|variable_revision_number:8|show_window:False|notes:\x5B\'The "NamesAndTypes" module allows you to assign a meaningful name to each image by which other modules will refer to it. 3D images will be processed so "Yes" is chosen to the right of "Process as 3D?". The relative pixel spacing is found by opening the image in ImageJ Fiji, opening the "Image" tab followed by "Show Info...". The voxel size can be seen in the image info description. In this example the image containng "C=1" is named as "Membrane", "C=3" as "Cytoplasm" and "C=5" as "Nucleus". Differentiating these three sets of 3D images could also be done by using other criteria. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Assign a name to:Images matching rules
+    Select the image type:Grayscale image
+    Name to assign these images:DNA
+    Match metadata:\x5B\x5D
+    Image set matching method:Order
+    Set intensity range from:Image metadata
+    Assignments count:3
+    Single images count:0
+    Maximum intensity:255.0
+    Process as 3D?:Yes
+    Relative pixel spacing in X:0.1083333
+    Relative pixel spacing in Y:0.1083333
+    Relative pixel spacing in Z:0.29
+    Select the rule criteria:and (file does contain "C=5")
+    Name to assign these images:Nucleus
+    Name to assign these objects:Cell
+    Select the image type:Grayscale image
+    Set intensity range from:Image metadata
+    Maximum intensity:255.0
+    Select the rule criteria:and (file does contain "C=1")
+    Name to assign these images:Membrane
+    Name to assign these objects:Nucleus
+    Select the image type:Grayscale image
+    Set intensity range from:Image metadata
+    Maximum intensity:255.0
+    Select the rule criteria:and (file does contain "C=3")
+    Name to assign these images:Cytoplasm
+    Name to assign these objects:Cytoplasm
+    Select the image type:Grayscale image
+    Set intensity range from:Image metadata
+    Maximum intensity:255.0
+
+Groups:[module_num:4|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'The "Groups" module optionally allows you to split your list of images into image subsets (groups) which will be processed independently of each other. Examples of groupings include screening batches, microtiter plates, time-lapse movies, etc. In this case grouping images is not needed. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Do you want to group your images?:No
+    grouping metadata count:1
+    Metadata category:Plate
+
+RescaleIntensity:[module_num:5|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'It is sometimes helpful to rescale images when processing them in CellProfiler. If the objects in question are relatively homogeneous within experiments but are very different experiment-to-experiment this standardizes the input in a way that makes processing images more reproducible and suppresses experimental variation and batch effects; however if your objects are relatively heterogeneous within a single experiment or you have areas with bright debris this is not recommended.  If rescaling in this fashion, a "RescaleIntensity" module is needed for each channel. This module is used for the nuclei image.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:Nucleus
+    Name the output image:RescaleIntensityNucleus
+    Rescaling method:Stretch each image to use the full intensity range
+    Method to calculate the minimum intensity:Custom
+    Method to calculate the maximum intensity:Custom
+    Lower intensity limit for the input image:0.0
+    Upper intensity limit for the input image:1.0
+    Intensity range for the input image:0.0,1.0
+    Intensity range for the output image:0.0,1.0
+    Select image to match in maximum intensity:None
+    Divisor value:1.0
+    Divisor measurement:None
+
+RescaleIntensity:[module_num:6|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'It is sometimes helpful to rescale images when processing them in CellProfiler. If the objects in question are relatively homogeneous within experiments but are very different experiment-to-experiment this standardizes the input in a way that makes processing images more reproducible and suppresses experimental variation and batch effects; however if your objects are relatively heterogeneous within a single experiment or you have areas with bright debris this is not recommended.  If rescaling in this fashion, a "RescaleIntensity" module is needed for each channel. This module is used for the membrane image. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:Membrane
+    Name the output image:RescaleIntensityMembrane
+    Rescaling method:Stretch each image to use the full intensity range
+    Method to calculate the minimum intensity:Custom
+    Method to calculate the maximum intensity:Custom
+    Lower intensity limit for the input image:0.0
+    Upper intensity limit for the input image:1.0
+    Intensity range for the input image:0.0,1.0
+    Intensity range for the output image:0.0,1.0
+    Select image to match in maximum intensity:None
+    Divisor value:1.0
+    Divisor measurement:None
+
+RescaleIntensity:[module_num:7|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'It is sometimes helpful to rescale images when processing them in CellProfiler. If the objects in question are relatively homogeneous within experiments but are very different experiment-to-experiment this standardizes the input in a way that makes processing images more reproducible and suppresses experimental variation and batch effects; however if your objects are relatively heterogeneous within a single experiment or you have areas with bright debris this is not recommended.  If rescaling in this fashion, a "RescaleIntensity" module is needed for each channel. This module is used for the cytoplasm (beta-actin) image. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:Cytoplasm
+    Name the output image:RescaleIntensityCytoplasm
+    Rescaling method:Stretch each image to use the full intensity range
+    Method to calculate the minimum intensity:Custom
+    Method to calculate the maximum intensity:Custom
+    Lower intensity limit for the input image:0.0
+    Upper intensity limit for the input image:1.0
+    Intensity range for the input image:0.0,1.0
+    Intensity range for the output image:0.0,1.0
+    Select image to match in maximum intensity:None
+    Divisor value:1.0
+    Divisor measurement:None
+
+Resize:[module_num:8|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'Processing 3D images requires much more computation time than 2D images. Often, downsampling an image can yield large performance gains and at the same time smooth an image to remove noise. If the objects of interest are relatively large compared to the pixel size, then downsampling will only minimally affect the final segmentation. A value of 0.25 is chosen. This module will resize the nuclei image.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:RescaleIntensityNucleus
+    Name the output image:ResizeNucleus
+    Resizing method:Resize by a fraction or multiple of the original size
+    Resizing factor:0.25
+    Width of the final image:100
+    Height of the final image:100
+    Interpolation method:Nearest Neighbor
+    Method to specify the dimensions:Image
+    Select the image with the desired dimensions:RescaleIntensity
+    Additional image count:0
+
+Resize:[module_num:9|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'Processing 3D images requires much more computation time than 2D images. Often, downsampling an image can yield large performance gains and at the same time smooth an image to remove noise. If the objects of interest are relatively large compared to the pixel size, then downsampling will only minimally affect the final segmentation. A value of 0.25 is chosen. This module will resize the membrane image.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:RescaleIntensityMembrane
+    Name the output image:ResizeMembrane
+    Resizing method:Resize by a fraction or multiple of the original size
+    Resizing factor:0.25
+    Width of the final image:100
+    Height of the final image:100
+    Interpolation method:Nearest Neighbor
+    Method to specify the dimensions:Image
+    Select the image with the desired dimensions:RescaleIntensity
+    Additional image count:0
+
+Resize:[module_num:10|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'Processing 3D images requires much more computation time than 2D images. Often, downsampling an image can yield large performance gains and at the same time smooth an image to remove noise. If the objects of interest are relatively large compared to the pixel size, then downsampling will only minimally affect the final segmentation. A value of 0.25 is chosen. This module will resize the cytoplasm (beta-actin) image.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:RescaleIntensityCytoplasm
+    Name the output image:ResizeCytoplasm
+    Resizing method:Resize by a fraction or multiple of the original size
+    Resizing factor:0.25
+    Width of the final image:100
+    Height of the final image:100
+    Interpolation method:Nearest Neighbor
+    Method to specify the dimensions:Image
+    Select the image with the desired dimensions:RescaleIntensity
+    Additional image count:0
+
+MedianFilter:[module_num:11|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B"A median filter will homogenize the signal within the nucleus and reduce noise in the background. DNA is not uniformly distributed throughout the nucleus, which can lead to holes forming in the downstream object identification. Choose a filter window size of 5. This number was chosen empirically\x3A it is smaller than the diameter of a typical nucleus and it is small enough that nuclei aren\'t merged together, but it is large enough to help suppress over-segmentation of the nuclei."\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ResizeNucleus
+    Name the output image:MedianFilterNucleus1
+    Window:5
+
+EnhanceOrSuppressFeatures:[module_num:12|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\'This module helps enhance 30 pixel areas with variable intensity to produce an image with other features largely removed. This is a continuation of the previous step to further reduce possibility of incorrect segmentaiton due after thresholding. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MedianFilterNucleus1
+    Name the output image:EorS_Nucleus
+    Select the operation:Enhance
+    Feature size:30
+    Feature type:Speckles
+    Range of hole sizes:1,10
+    Smoothing scale:10
+    Shear angle:0.0
+    Decay:0.95
+    Enhancement method:Tubeness
+    Speed and accuracy:Slow
+
+Threshold:[module_num:13|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\'This module will separate the foreground (nuclei) from the background. RobustBackground method is chosen with Global threshold strategy. Threshold smoothing scale of 0.6744 (sigma = 0.5) is chosen to help avoid oversegmentation.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:EorS_Nucleus
+    Name the output image:ApplyThresholdNucleus
+    Threshold strategy:Global
+    Thresholding method:RobustBackground
+    Threshold smoothing scale:0.6744
+    Threshold correction factor:1
+    Lower and upper bounds on threshold:0,1
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Three classes
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:1
+    Thresholding method:Otsu
+
+RemoveHoles:[module_num:14|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module implements an algorithm that will remove small holes within the nucleus. Any remaining holes will contribute to oversegmentation of the nuclei.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ApplyThresholdNucleus
+    Name the output image:RemoveHolesNucleus
+    Size:50
+
+MedianFilter:[module_num:15|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module smooths the boundaries to reduce oversegmentation of the produced binary image.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:RemoveHolesNucleus
+    Name the output image:MedianFilterNucleus2
+    Window:5
+
+ImageMath:[module_num:16|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'After threshold there could be small background objects that are not nuclei. These objects can be removed by inverting the binary image and removing tham as small holes. This module allows us to invert the binary image. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:Invert
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:ImageAfterMathClean1
+    Image or measurement?:Image
+    Select the first image:MedianFilterNucleus2
+    Multiply the first image by:1.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:
+    Multiply the second image by:1.0
+    Measurement:
+
+RemoveHoles:[module_num:17|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module will remove small objects less than the set size. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ImageAfterMathClean1
+    Name the output image:RemoveSmallObjects
+    Size:10
+
+ImageMath:[module_num:18|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'After removing holes the image needs to inverted back to prepare for Watershed. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:Invert
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:ImageAfterMathClean2
+    Image or measurement?:Image
+    Select the first image:RemoveSmallObjects
+    Multiply the first image by:1.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:
+    Multiply the second image by:1.0
+    Measurement:
+
+Watershed:[module_num:19|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module implements the watershed algorithm, which will segment the nuclei.  Essentially this involves finding the center of the spheres we thresholded in the last step, looking for the pixels with the furthest distance from the edge, calling them "centers", then expanding out from the centers until all thresholded pixels have been added to one object or another.  See http\x3A//scikit-image.org/docs/dev/auto_examples/segmentation/plot_watershed.html for more information.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ImageAfterMathClean2
+    Name the output object:WatershedNucleus
+    Generate from:Distance
+    Markers:None
+    Mask:Leave blank
+    Connectivity:8
+    Downsample:1
+
+ShrinkToObjectCenters:[module_num:20|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'We\\\'ve successfuly segmented the nuclei!  Now we\\\'ll segment the cells around each nucleus by using the nucleus as a "seed" or "marker" for the membrane around it.  This will involve 3 steps- 1) Preparing the nuclei for seeding 2) Defining the membrane boundary and 3) Removing the extra space at the edges and 4) Segmenting the cell as all pixels between the nucleus and the membrane.\', \'\', \'Since nucleus boundary can at times be close to the membrane in the image, its segmented form can impact the accuracy of cell segmentation in the later modules. To minimize this the nuclei are shrunk to smaller sizes before being used as markers. The segmented nuclei are first shrunk to centers by using this module.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input object:WatershedNucleus
+    Name the output object:ShrinkToNucleiCenters
+
+ConvertObjectsToImage:[module_num:21|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module converts the output from the previous module that produced segmented nuclei centers to a uint16 image. This format will be needed in the "Watershed" module to segment cells by using nuclei as markers later in the pipeline.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input objects:ShrinkToNucleiCenters
+    Name the output image:NucleiImage
+    Select the color format:uint16
+    Select the colormap:Default
+
+Dilation:[module_num:22|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B"We want the nuclei to be smaller, but not point objects when using them as markers to segment the cells, so we\'ll dilate them into a ball with a radius of 8. This is the end of Step 1 (Preparing the nuclei for seeding)."\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:NucleiImage
+    Name the output image:DilationNucleiImage
+    Structuring element:ball,10
+
+MedianFilter:[module_num:23|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B"We\'ll now move onto Step 2- Defining the membrane boundary.", \'\', \'This module is used to remove salt-and-pepper noise from the resized membrane image.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ResizeMembrane
+    Name the output image:MedianFilterMembrane
+    Window:3
+
+EnhanceOrSuppressFeatures:[module_num:24|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\'This module is used to improve the upcoming membrane thresholding by enhancing the membrane intensity and make it better defined. Neurites is a good feature to choose for membrane to enhance its long, thin features. Tubeness is used as the enhancement method and the Smoothing scale set to 3. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MedianFilterMembrane
+    Name the output image:EorS_Membrane
+    Select the operation:Enhance
+    Feature size:5
+    Feature type:Neurites
+    Range of hole sizes:1,10
+    Smoothing scale:3
+    Shear angle:0.0
+    Decay:0.95
+    Enhancement method:Tubeness
+    Speed and accuracy:Fast
+
+Threshold:[module_num:25|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B"This module is used to threshold the rescaled enhanced membrane image. For this image the Minimum cross entropy is used with Global strategy.  If the membrane image were perfectly bright everywhere, this would complete Step 2 (defining the membrane boundary), but as it\'s not we\'ll do a few more steps to clean it up a bit."\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:EorS_Membrane
+    Name the output image:ThresholdMembrane
+    Threshold strategy:Global
+    Thresholding method:Minimum cross entropy
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1
+    Lower and upper bounds on threshold:0,1.0
+    Manual threshold:0.05
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Assign pixels in the middle intensity class to the foreground or the background?:Background
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+ImageMath:[module_num:26|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B"This module is used to invert the membrane image that will be used to segment the cells by defining the volume enclosed by the membrane.  This leaves us with the cytoplasmic space as white, and the membrane space as black.  We\'ll clean it up in the following modules, but this image is the basis of what we\'ll call the cytoplasm."\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:Invert
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:InvertedMembrane
+    Image or measurement?:Image
+    Select the first image:ThresholdMembrane
+    Multiply the first image by:1.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:
+    Multiply the second image by:1.0
+    Measurement:
+
+RemoveHoles:[module_num:27|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module is used to clean up the inverted membrane image by filling small black holes that have size less than 65. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:InvertedMembrane
+    Name the output image:RemoveHolesMembrane
+    Size:65
+
+Opening:[module_num:28|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module is used to remove salt noise and holes from the inverted membrane image that "RemoveHoles" module was not able to remove.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:RemoveHolesMembrane
+    Name the output image:OpeningMembrane1
+    Structuring element:cube,4
+
+Dilation:[module_num:29|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'The previous module expanded the black space of the membrane everywhere in order to fill holes; this module with the cube size set to 3 is used to reduce it back down slightly (while still keeping the holes filled).  This completes Step 2 - defining the membrane boundary.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:OpeningMembrane1
+    Name the output image:DilationInvertedMembrane
+    Structuring element:cube,3
+
+Erosion:[module_num:30|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'Prior to making a mask for Z-axis cutoffs to prepare the mebrane image for segmentation the nucleus image after being filtered by median filter is eroded. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MedianFilterNucleus2
+    Name the output image:ErosionFilterNucleus2
+    Structuring element:disk,9
+
+Resize:[module_num:31|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B"We\'ll now move onto Step 3- Removing the extra space at the edges.", \'\', "The inverted membrane image cannot be used as the cytoplasm just yet. The space above and below the monolayer was also dark in the original image and thus appears white in the binary image. The \\xe2\\x80\\x9cWatershed\\xe2\\x80\\x9d module cannot distinguish that this is not cytoplasm so it will have to be removed. We\'ll solve this issue by using the nucleus image to define the boundaries of the monolayer by masking only the area of interest, and the first step in doing that is to make the image smaller for faster processing."\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ErosionFilterNucleus2
+    Name the output image:ResizeErosion
+    Resizing method:Resize by a fraction or multiple of the original size
+    Resizing factor:0.125
+    Width of the final image:100
+    Height of the final image:100
+    Interpolation method:Nearest Neighbor
+    Method to specify the dimensions:Image
+    Select the image with the desired dimensions:RescaleIntensity
+    Additional image count:0
+
+Closing:[module_num:32|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'We\\\'ll essentially "blur out" the edges of the segmented nuclei- the result should look like a cloud of signal where the cell monolayer resides.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ResizeErosion
+    Name the output image:ClosingResizeErosion
+    Structuring element:disk,25
+
+Resize:[module_num:33|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B"We\'ll now resize our nuclear volume back to the size it was a couple of steps ago.  "\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ClosingResizeErosion
+    Name the output image:ResizeNucleiForAddition
+    Resizing method:Resize by specifying desired final dimensions
+    Resizing factor:4
+    Width of the final image:100
+    Height of the final image:100
+    Interpolation method:Nearest Neighbor
+    Method to specify the dimensions:Image
+    Select the image with the desired dimensions:ResizeNucleus
+    Additional image count:0
+
+ImageMath:[module_num:34|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'The obtained binary image of nuclei will be inverted and later added to the binary membrane image to create a mask that represents the area of interest.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:Invert
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:InvertedNucleiForAddition
+    Image or measurement?:Image
+    Select the first image:ResizeNucleiForAddition
+    Multiply the first image by:1.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:EorS_Membrane
+    Multiply the second image by:3
+    Measurement:
+
+Opening:[module_num:35|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module erodes all smaller sized objects and provides the location of the cell monolayer boundary. However, the lower and upper Z-slices have badly defined cell membranes which may impact cell segmentation. To remove these lower and upper Z-slices the next modules will create a mask to do just that.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:RemoveHolesMembrane
+    Name the output image:OpeningMembrane2
+    Structuring element:disk,20
+
+ImageMath:[module_num:36|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'Now we add the binary membrane image and the binary nuclei image which defines the area occupied by the cell.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:Add
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:MembraneMonolayerMask
+    Image or measurement?:Image
+    Select the first image:OpeningMembrane2
+    Multiply the first image by:1.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:InvertedNucleiForAddition
+    Multiply the second image by:1
+    Measurement:
+
+ImageMath:[module_num:37|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'The created mask now needs to be inverted to prepare it for "MaskImage" module.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Operation:Invert
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0.0
+    Set values less than 0 equal to 0?:Yes
+    Set values greater than 1 equal to 1?:Yes
+    Ignore the image masks?:No
+    Name the output image:InvMembraneMonolayerMask
+    Image or measurement?:Image
+    Select the first image:MembraneMonolayerMask
+    Multiply the first image by:1.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:EorS_Membrane
+    Multiply the second image by:3
+    Measurement:
+
+Erosion:[module_num:38|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'To correct for the overestimation of the cell boundary at the monolayer boundary the obtained mask is eroded. Erosion disk size is set to 3.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:InvMembraneMonolayerMask
+    Name the output image:ErosionMonolayerMask
+    Structuring element:disk,3
+
+Closing:[module_num:39|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'Closing allows to smooth the boundary of the defined volume of interest and remove any holes. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ErosionMonolayerMask
+    Name the output image:ClosingMembNucMonolayerMask
+    Structuring element:disk,10
+
+MaskImage:[module_num:40|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'The smoothened sum of nuclei and membrane image is now used to mask the inverted membrane image. In this case the mask does not need to be inverted. The output of this step will be used to mask the original membrane image for a more accurate segmentation. This completes Step 3 - removing the extra space yet not losing the monolayer edges.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:DilationInvertedMembrane
+    Name the output image:MaskedMembrane
+    Use objects or an image as a mask?:Image
+    Select object for mask:None
+    Select image for mask:ClosingMembNucMonolayerMask
+    Invert the mask?:No
+
+Watershed:[module_num:41|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'Everything needed for cell segmentation is now available, so we can finally do Step 4 - segmenting the cell as all pixels between the nucleus and the membrane. The input is the median-filtered resized membrane image - the output of the first module in Step 2. The nuclear balls we made in Step 1 are the Markers. The mask prepared in Step 3 is used as the Mask and keeps the boundary of the cytoplasm restricted to only where we want it.  \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MedianFilterMembrane
+    Name the output object:WatershedMembrane
+    Generate from:Markers
+    Markers:DilationNucleiImage
+    Mask:MaskedMembrane
+    Connectivity:8
+    Downsample:1
+
+ConvertObjectsToImage:[module_num:42|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B"In addition to segmenting the nuclei and the whole cells, for this experiment we\'d additionally like to segment just the cytoplasm, so we\'ll do a few more steps to accomplish that.", \'\', \'This module converts the output from the previous module that produced segmented cells based on membrane image to a uint16 image. This format will be needed in the "Watershed" module to segment cytoplasm by using segmented membrane as markers in the next two modules.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input objects:WatershedMembrane
+    Name the output image:MembraneImage
+    Select the color format:uint16
+    Select the colormap:Default
+
+MedianFilter:[module_num:43|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module is used to remove salt-and-pepper noise from the resized cytoplasm (beta-actin) image.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ResizeCytoplasm
+    Name the output image:MedianFilterCytoplasm
+    Window:3
+
+Watershed:[module_num:44|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B"Everything needed for cytoplasm (beta-actin) segmentation is now available, so we can segment cytoplasm based on segmented cells in the previous watershed. The input is the median-filtered resized cytoplasm image - the output of the previous MedianFilter step. The segmented cells based on membrane now become Markers and the cytoplasm segmentation uses a mask that only defines colony boundaries and not cell boundaries. We\'ve now finished all of our segmentations!"\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MedianFilterCytoplasm
+    Name the output object:WatershedCytoplasm
+    Generate from:Markers
+    Markers:MembraneImage
+    Mask:ClosingMembNucMonolayerMask
+    Connectivity:8
+    Downsample:1
+
+ResizeObjects:[module_num:45|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B"To decrease image processing time the original nuclei image was resized in the beginning of the pipeline. We\'ll now resize our segmented objects back to the same size as the original image.  This module resizes the nuclei."\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input object:WatershedNucleus
+    Name the output object:ResizeWatershedNucleus
+    Method:Factor
+    Factor:4
+    Width:100
+    Height:100
+
+ResizeObjects:[module_num:46|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B"To decrease image processing time the membrane images was resized in the beginning of the pipeline. We\'ll now resize our segmented objects back to the same size as the original image.  This module resizes the membrane objects."\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input object:WatershedMembrane
+    Name the output object:ResizeWatershedMembrane
+    Method:Factor
+    Factor:4
+    Width:100
+    Height:100
+
+ResizeObjects:[module_num:47|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B"To decrease image processing time the cytoplasm (beta-actin) image was resized in the beginning of the pipeline. We\'ll now resize our segmented objects back to the same size as the original image.  This module resizes the cytoplasms."\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input object:WatershedCytoplasm
+    Name the output object:ResizeWatershedCytoplasm
+    Method:Factor
+    Factor:4
+    Width:100
+    Height:100
+
+FilterObjects:[module_num:48|svn_version:\'Unknown\'|variable_revision_number:8|show_window:False|notes:\x5B\'When comparing different image sets it is a good practice to remove objects that are touching or being cut by the borders of the image since the results may become misinterpreted. This module removes segmented cytoplasm objects at the image boundary and relabels membrane and nuclei objects accordingly. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the objects to filter:ResizeWatershedCytoplasm
+    Name the output objects:FilterObjectsCytoplasm
+    Select the filtering mode:Image or mask border
+    Select the filtering method:Limits
+    Select the objects that contain the filtered objects:None
+    Select the location of the rules or classifier file:Elsewhere...\x7C
+    Rules or classifier file name:rules.txt
+    Class number:1
+    Measurement count:1
+    Additional object count:2
+    Assign overlapping child to:Both parents
+    Select the measurement to filter by:AreaShape_Area
+    Filter using a minimum measurement value?:Yes
+    Minimum value:0.0
+    Filter using a maximum measurement value?:Yes
+    Maximum value:1.0
+    Select additional object to relabel:ResizeWatershedMembrane
+    Name the relabeled objects:FilterObjectsMembrane
+    Select additional object to relabel:ResizeWatershedNucleus
+    Name the relabeled objects:FilterObjectsNucleus
+
+OverlayObjects:[module_num:49|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module allows to visualize how well the nuclei image was segmented.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Input:RescaleIntensityNucleus
+    Name the output image:OverlayObjectsNuclei
+    Objects:ResizeWatershedNucleus
+    Opacity:0.3
+
+OverlayObjects:[module_num:50|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module allows to visualize how well the membrane image was segmented.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Input:RescaleIntensityMembrane
+    Name the output image:OverlayObjectsMembrane
+    Objects:ResizeWatershedMembrane
+    Opacity:0.3
+
+OverlayObjects:[module_num:51|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module allows to visualize how well the cytoplasm (beta-actin) image was segmented.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Input:RescaleIntensityCytoplasm
+    Name the output image:OverlayObjectsCytoplasm
+    Objects:ResizeWatershedCytoplasm
+    Opacity:0.3
+
+MeasureObjectIntensity:[module_num:52|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'The module allows us to measure the intensity of our original membrane, nuclei and cytoplasm (beta-actin) channels inside our segmented objects. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Hidden:3
+    Select an image to measure:Membrane
+    Select an image to measure:Nucleus
+    Select an image to measure:Cytoplasm
+    Select objects to measure:FilterObjectsMembrane
+    Select objects to measure:FilterObjectsNucleus
+    Select objects to measure:FilterObjectsCytoplasm
+
+MeasureObjectSizeShape:[module_num:53|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'The module allows to measure the size and shape of the segmented nuclei, cells and cytoplasm (beta-actin).  \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select objects to measure:FilterObjectsMembrane
+    Select objects to measure:FilterObjectsNucleus
+    Select objects to measure:FilterObjectsCytoplasm
+    Calculate the Zernike features?:No
+
+MeasureObjectNeighbors:[module_num:54|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\'This module allows us to quantify neighboring segmented cytoplasm (beta-actin) objects and measure distances between these objects.  \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select objects to measure:FilterObjectsCytoplasm
+    Select neighboring objects to measure:FilterObjectsCytoplasm
+    Method to determine neighbors:Expand until adjacent
+    Neighbor distance:5
+    Retain the image of objects colored by numbers of neighbors?:No
+    Name the output image:ObjectNeighborCount
+    Select colormap:Default
+    Retain the image of objects colored by percent of touching pixels?:No
+    Name the output image:PercentTouching
+    Select colormap:Default
+
+MeasureColocalization:[module_num:55|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'This module allows us to measure the correlations in the intensity of some of the fluorescent channels. In this case we will look at nucleus and cytoplasm (beta-actin) objects and measure them in the original nuclear and cytoplasmic channels.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Hidden:2
+    Hidden:2
+    Select an image to measure:Cytoplasm
+    Select an image to measure:Nucleus
+    Set threshold as percentage of maximum intensity for the images:15.0
+    Select where to measure correlation:Within objects
+    Select an object to measure:FilterObjectsCytoplasm
+    Select an object to measure:FilterObjectsNucleus
+
+MeasureTexture:[module_num:56|svn_version:\'Unknown\'|variable_revision_number:5|show_window:False|notes:\x5B\'This module allows us to measure texture features such as angular second moment, linear dependency of intensity values and others. In this case we will focus on the cytoplasm (beta-actin) image.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Hidden:1
+    Hidden:1
+    Hidden:1
+    Select an image to measure:Cytoplasm
+    Select objects to measure:FilterObjectsCytoplasm
+    Texture scale to measure:5
+    Measure images or objects?:Both
+
+SaveImages:[module_num:57|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\'The SaveImages module lets us save our overlay images to peruse later- this module saves the image of the overlaid nuclei.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:OverlayObjectsNuclei
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:Membrane
+    Enter single file name:OrigBlue
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:_SegmentedNuclei
+    Saved file format:tiff
+    Output file location:Default Output Folder\x7C
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:No
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+
+SaveImages:[module_num:58|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\'The SaveImages module lets us save our overlay images to peruse later- this module saves the image of the overlaid cells.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:OverlayObjectsMembrane
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:Membrane
+    Enter single file name:OrigBlue
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:_SegmentedMembrane
+    Saved file format:tiff
+    Output file location:Default Output Folder\x7C
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:No
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+
+SaveImages:[module_num:59|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\'The SaveImages module lets us save our overlay images to peruse later- this module saves the image of the overlaid cytoplasms.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:OverlayObjectsCytoplasm
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:Membrane
+    Enter single file name:OrigBlue
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:_SegmentedCytoplasm
+    Saved file format:tiff
+    Output file location:Default Output Folder\x7C
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:No
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+
+ExportToSpreadsheet:[module_num:60|svn_version:\'Unknown\'|variable_revision_number:12|show_window:False|notes:\x5B\'All data obtained for segmented objects can be extracted by using this module. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:True]
+    Select the column delimiter:Comma (",")
+    Add image metadata columns to your object data file?:No
+    Select the measurements to export:No
+    Calculate the per-image mean values for object measurements?:No
+    Calculate the per-image median values for object measurements?:No
+    Calculate the per-image standard deviation values for object measurements?:No
+    Output file location:Default Output Folder\x7CC\x3A\\\\\\\\Users\\\\\\\\Voss\\\\\\\\Desktop\\\\\\\\edge center alen
+    Create a GenePattern GCT file?:No
+    Select source of sample row name:Metadata
+    Select the image to use as the identifier:None
+    Select the metadata to use as the identifier:None
+    Export all measurement types?:Yes
+    Press button to select measurements:
+    Representation of Nan/Inf:NaN
+    Add a prefix to file names?:Yes
+    Filename prefix:MyExpt_
+    Overwrite existing files without warning?:No
+    Data to export:Do not use
+    Combine these object measurements with those of the previous object?:No
+    File name:DATA.csv
+    Use the object name for the file name?:Yes

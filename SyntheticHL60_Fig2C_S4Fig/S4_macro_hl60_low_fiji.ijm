@@ -1,0 +1,10 @@
+run("Color Balance...");
+run("Enhance Contrast", "saturated=0.35");
+run("Apply LUT", "stack");
+run("Size...", "width=400 height=280 depth=129 constrain average interpolation=None");
+run("Gaussian Blur 3D...", "x=2 y=2 z=2");
+setOption("BlackBackground", true);
+run("Make Binary", "method=Otsu background=Dark black");
+run("Fill Holes (Binary/Gray)");
+run("Distance Transform Watershed 3D", "distances=[Borgefors (3,4,5)] output=[16 bits] normalize dynamic=1 connectivity=6");
+run("Size...", "width=807 height=565 depth=129 constrain average interpolation=None");

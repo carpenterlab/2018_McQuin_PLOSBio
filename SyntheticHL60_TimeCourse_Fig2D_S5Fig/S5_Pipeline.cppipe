@@ -1,0 +1,263 @@
+CellProfiler Pipeline: http://www.cellprofiler.org
+Version:3
+DateRevision:300
+GitHash:
+ModuleCount:21
+HasImagePlaneDetails:False
+
+Images:[module_num:1|svn_version:\'Unknown\'|variable_revision_number:2|show_window:True|notes:\x5B\'To begin creating your project, use the "Images" module to compile a list of files and/or folders that you want to analyze. You can also specify a set of rules to include only the desired files in your selected folders. In this example raw nuclei images and their ground truth images at chosen time points are uploaded by dragging them into the "Drop files and folders here" box. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    :
+    Filter images?:Images only
+    Select the rule criteria:and (extension does isimage) (directory doesnot containregexp "\x5B\\\\\\\\\\\\\\\\/\x5D\\\\\\\\.")
+
+Metadata:[module_num:2|svn_version:\'Unknown\'|variable_revision_number:4|show_window:True|notes:\x5B\'The "Metadata" module optionally allows you to extract information describing your images (i.e, metadata) which will be stored along with your measurements. This information can be contained in the file name and/or location, or in an external file. In this example "Metadata" will not be used.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Extract metadata?:No
+    Metadata data type:Text
+    Metadata types:{}
+    Extraction method count:2
+    Metadata extraction method:Extract from file/folder names
+    Metadata source:File name
+    Regular expression to extract from file name:t(?P<Site>\x5B0-9\x5D)
+    Regular expression to extract from folder name:(?P<Date>\x5B0-9\x5D{4}_\x5B0-9\x5D{2}_\x5B0-9\x5D{2})$
+    Extract metadata from:All images
+    Select the filtering criteria:and (file does contain "")
+    Metadata file location:
+    Match file and image metadata:\x5B\x5D
+    Use case insensitive matching?:No
+    Metadata extraction method:Extract from file/folder names
+    Metadata source:File name
+    Regular expression to extract from file name:man_seg(?P<Site>\x5B0-9\x5D)
+    Regular expression to extract from folder name:(?P<Date>\x5B0-9\x5D{4}_\x5B0-9\x5D{2}_\x5B0-9\x5D{2})$
+    Extract metadata from:All images
+    Select the filtering criteria:and (file does contain "")
+    Metadata file location:
+    Match file and image metadata:\x5B\x5D
+    Use case insensitive matching?:No
+
+NamesAndTypes:[module_num:3|svn_version:\'Unknown\'|variable_revision_number:8|show_window:True|notes:\x5B\'The "NamesAndTypes" module allows to assign a meaningful name to each image by which other modules will refer to it. 3D images will be processed so "Yes" is chosen to the right of "Process as 3D?". The relative pixel spacing is found by opening the image in ImageJ Fiji, opening the "Image" tab followed by "Show Info..." . The voxel size can be seen in the image info description. In this example images not containng the word "ground" are named as "Nuclei" while those that do contain the word "ground" as "Ground_truth". Differentiating these two sets of 3D images could also be done by using other criteria. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Assign a name to:Images matching rules
+    Select the image type:Grayscale image
+    Name to assign these images:DNA
+    Match metadata:\x5B\x5D
+    Image set matching method:Order
+    Set intensity range from:Image metadata
+    Assignments count:2
+    Single images count:0
+    Maximum intensity:255.0
+    Process as 3D?:Yes
+    Relative pixel spacing in X:0.1238
+    Relative pixel spacing in Y:0.1238
+    Relative pixel spacing in Z:1
+    Select the rule criteria:and (file doesnot contain "ground")
+    Name to assign these images:Nuclei
+    Name to assign these objects:Cell
+    Select the image type:Grayscale image
+    Set intensity range from:Image metadata
+    Maximum intensity:255.0
+    Select the rule criteria:and (file does contain "ground")
+    Name to assign these images:Ground_truth
+    Name to assign these objects:Nucleus
+    Select the image type:Grayscale image
+    Set intensity range from:Image metadata
+    Maximum intensity:255.0
+
+Groups:[module_num:4|svn_version:\'Unknown\'|variable_revision_number:2|show_window:True|notes:\x5B\'The "Groups" module optionally allows you to split your list of images into image subsets (groups) which will be processed independently of each other. Examples of groupings include screening batches, microtiter plates, time-lapse movies, etc. This option is not needed in this example so "No" is chosen.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Do you want to group your images?:No
+    grouping metadata count:1
+    Metadata category:None
+
+RescaleIntensity:[module_num:5|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'It is sometimes helpful to rescale images when processing them in CellProfiler. If the objects in question are relatively homogeneous within experiments but are very different experiment-to-experiment this standardizes the input in a way that makes processing images more reproducible and suppresses experimental variation and batch effects; however if your objects are relatively heterogeneous within a single experiment or you have areas with bright debris this is not recommended. A "RescaleIntensity" module is only needed for raw images in this example.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:Nuclei
+    Name the output image:RescaleNucleiIntensity
+    Rescaling method:Stretch each image to use the full intensity range
+    Method to calculate the minimum intensity:Custom
+    Method to calculate the maximum intensity:Custom
+    Lower intensity limit for the input image:0.0
+    Upper intensity limit for the input image:1.0
+    Intensity range for the input image:0.0,1.0
+    Intensity range for the output image:0.0,1.0
+    Select image to match in maximum intensity:None
+    Divisor value:1.0
+    Divisor measurement:None
+
+Resize:[module_num:6|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'Processing 3D images requires much more computation time than 2D images. Often, downsampling an image can yield large performance gains and at the same time smooth an image to remove noise. If the objects of interest are relatively large compared to the pixel size, then downsampling will only minimally affect the final segmentation. A value of 0.5 is chosen in this example.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:RescaleNucleiIntensity
+    Name the output image:Resize
+    Resizing method:Resize by a fraction or multiple of the original size
+    Resizing factor:0.5
+    Width of the final image:100
+    Height of the final image:100
+    Interpolation method:Nearest Neighbor
+    Method to specify the dimensions:Manual
+    Select the image with the desired dimensions:None
+    Additional image count:0
+
+MedianFilter:[module_num:7|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B"A median filter will homogenize the signal within the nucleus and reduce noise in the background. DNA is not uniformly distributed throughout the nucleus, which can lead to holes forming in the downstream object identification. A filter window size of 5 is chosen. This number was chosen empirically\x3A it is smaller than the diameter of a typical nucleus and it is small enough that nuclei aren\'t merged together, yet it is large enough to help suppress oversegmentation of the nuclei."\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:Resize
+    Name the output image:MedianFilter
+    Window:5
+
+Threshold:[module_num:8|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\'This module will separate the foreground (nuclei) from the background. The Three-class Otsu method is chosen with the middle class of intensities sent to the background as part of a Global threshold strategy.  \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MedianFilter
+    Name the output image:ApplyThreshold
+    Threshold strategy:Global
+    Thresholding method:Otsu
+    Threshold smoothing scale:0
+    Threshold correction factor:1
+    Lower and upper bounds on threshold:0,1.0
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Three classes
+    Assign pixels in the middle intensity class to the foreground or the background?:Background
+    Size of adaptive window:90
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+RemoveHoles:[module_num:9|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module implements an algorithm that will remove small holes within the nucleus. Any remaining holes may contribute to oversegmentation of the nuclei. Size 50 is chosen to avoid oversegmentation.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ApplyThreshold
+    Name the output image:RemoveHoles
+    Size:50
+
+Watershed:[module_num:10|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module implements the watershed algorithm which will segment the nuclei. Essentially this involves finding the center of the spheres we thresholded in the last step, looking for the pixels with the furthest distance from the edge, calling them "centers", then expanding out from the centers until all thresholded pixels have been added to one object or another.  See http\x3A//scikit-image.org/docs/dev/auto_examples/segmentation/plot_watershed.html for more information.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:RemoveHoles
+    Name the output object:Watershed
+    Generate from:Distance
+    Markers:None
+    Mask:Leave blank
+    Connectivity:8
+    Downsample:2
+
+ConvertObjectsToImage:[module_num:11|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'Before measuring segmented and ground truth image overlap the segmented objects need to be converted to image format. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input objects:Watershed
+    Name the output image:WatershedUint16
+    Select the color format:uint16
+    Select the colormap:Default
+
+Resize:[module_num:12|svn_version:\'Unknown\'|variable_revision_number:4|show_window:False|notes:\x5B\'To decrease image processing time the original nuclei image was resized in the beginning of the pipeline. To account for this size adjustment the segmented nuclei image will be resized back to the same size as the original image for image overlap measurements.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:WatershedUint16
+    Name the output image:ResizeWatershedUint16
+    Resizing method:Resize by specifying desired final dimensions
+    Resizing factor:0.5
+    Width of the final image:100
+    Height of the final image:100
+    Interpolation method:Nearest Neighbor
+    Method to specify the dimensions:Image
+    Select the image with the desired dimensions:Nuclei
+    Additional image count:0
+
+Threshold:[module_num:13|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\'In order to measure image overlap by the "MeasureImageOverlap" module the images should be in binary format. Since we want to capture everything in the segmented image, an arbitrarily low manual threshold has been chosen.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:ResizeWatershedUint16
+    Name the output image:ApplyThresholdResizedWatershed
+    Threshold strategy:Global
+    Thresholding method:Manual
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Manual threshold:0.0000000005
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+Threshold:[module_num:14|svn_version:\'Unknown\'|variable_revision_number:10|show_window:False|notes:\x5B\'In order to measure image overlap by the "MeasureImageOverlap" module the images should be in binary format. Since we want to capture everything in the ground truth image, an arbitrarily low manual threshold has been chosen.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:Ground_truth
+    Name the output image:ApplyThresholdGroundTruth
+    Threshold strategy:Global
+    Thresholding method:Manual
+    Threshold smoothing scale:0.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Manual threshold:0.0000000005
+    Select the measurement to threshold with:None
+    Two-class or three-class thresholding?:Two classes
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Size of adaptive window:50
+    Lower outlier fraction:0.05
+    Upper outlier fraction:0.05
+    Averaging method:Mean
+    Variance method:Standard deviation
+    # of deviations:2.0
+    Thresholding method:Otsu
+
+MeasureImageOverlap:[module_num:15|svn_version:\'Unknown\'|variable_revision_number:5|show_window:False|notes:\x5B\'This module evaluates how well the binary image produced after processing the raw image agrees with ground truth by calculating how much overlap there is between them.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the image to be used as the ground truth basis for calculating the amount of overlap:ApplyThresholdGroundTruth
+    Select the image to be used to test for overlap:ApplyThresholdResizedWatershed
+    Calculate earth mover\'s distance?:No
+    Maximum # of points:250
+    Point selection method:K Means
+    Maximum distance:250
+    Penalize missing pixels:No
+
+ResizeObjects:[module_num:16|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'Since the raw image of interest was resized by a factor of 0.5 prior to its analysis the segmented objects need to be resized by a factor of 2.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input object:Watershed
+    Name the output object:ResizeWatershedNuclei
+    Method:Factor
+    Factor:2
+    Width:100
+    Height:100
+
+OverlayObjects:[module_num:17|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'This module allows us to visualize how well the nuclei image was segmented. Opacity of 0.3 is chosen for object labels.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Input:Resize
+    Name the output image:OverlayObjects
+    Objects:Watershed
+    Opacity:0.3
+
+SaveImages:[module_num:18|svn_version:\'Unknown\'|variable_revision_number:13|show_window:False|notes:\x5B\'The SaveImages module lets us save our overlay images to peruse later- this module saves the image of the overlaid nuclei.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the type of image to save:Image
+    Select the image to save:OverlayObjects
+    Select method for constructing file names:From image filename
+    Select image name for file prefix:Nuclei
+    Enter single file name:OrigBlue
+    Number of digits:4
+    Append a suffix to the image file name?:Yes
+    Text to append to the image name:_SegmentedNuclei
+    Saved file format:tiff
+    Output file location:Default Output Folder\x7C
+    Image bit depth:16-bit integer
+    Overwrite existing files without warning?:No
+    When to save:Every cycle
+    Record the file and path information to the saved image?:No
+    Create subfolders in the output folder?:No
+    Base image folder:Elsewhere...\x7C
+
+MeasureObjectSizeShape:[module_num:19|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\'Object characteristics (e.g. size, shape) can now be obtained by using this module. These should be measured in the full-size objects  (aka the objects output from the "ResizeObjects" module).\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select objects to measure:ResizeWatershedNuclei
+    Calculate the Zernike features?:Yes
+
+MeasureObjectIntensity:[module_num:20|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\'In addition to object size and shape object intensity can also be measured. This is done on the full size nuclei and the raw input image. \'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Hidden:1
+    Select an image to measure:Nuclei
+    Select objects to measure:ResizeWatershedNuclei
+
+ExportToSpreadsheet:[module_num:21|svn_version:\'Unknown\'|variable_revision_number:12|show_window:False|notes:\x5B\'Any or all data obtained for the images or for the segmented nuclei can be exported to the location of your choice using this module.\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:True]
+    Select the column delimiter:Comma (",")
+    Add image metadata columns to your object data file?:No
+    Select the measurements to export:No
+    Calculate the per-image mean values for object measurements?:No
+    Calculate the per-image median values for object measurements?:No
+    Calculate the per-image standard deviation values for object measurements?:No
+    Output file location:Default Output Folder\x7CC\x3A\\\\\\\\Users\\\\\\\\Voss\\\\\\\\Documents\\\\\\\\Anne Carpenter Lab\\\\\\\\3D checks\\\\\\\\Option 6\\\\\\\\testing\\\\\\\\tryout
+    Create a GenePattern GCT file?:No
+    Select source of sample row name:Metadata
+    Select the image to use as the identifier:None
+    Select the metadata to use as the identifier:None
+    Export all measurement types?:Yes
+    Press button to select measurements:
+    Representation of Nan/Inf:NaN
+    Add a prefix to file names?:Yes
+    Filename prefix:MyExpt_
+    Overwrite existing files without warning?:Yes
+    Data to export:Do not use
+    Combine these object measurements with those of the previous object?:No
+    File name:DATA.csv
+    Use the object name for the file name?:Yes

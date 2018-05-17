@@ -1,0 +1,12 @@
+run("Color Balance...");
+run("Enhance Contrast", "saturated=0.35");
+run("Apply LUT", "stack");
+run("Size...", "width=256 height=256 depth=52 constrain average interpolation=Bilinear");
+run("Median 3D...", "x=4 y=4 z=4");
+setOption("BlackBackground", true);
+run("Make Binary", "method=Otsu background=Dark black");
+run("Dilate", "stack");
+run("Fill Holes", "stack");
+run("Erode", "stack");
+run("Distance Transform Watershed 3D", "distances=[Chessboard (1,1,1)] output=[16 bits] normalize dynamic=1 connectivity=6");
+run("Size...", "width=1024 height=1024 depth=52 constrain average interpolation=None");
