@@ -1,4 +1,4 @@
-# 2018_mcquin_submitted
+# 2018_mcquin_PLOSBio
 
 Repository for **CellProfiler 3.0: next generation image processing for biology**
 
